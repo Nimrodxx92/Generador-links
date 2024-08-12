@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generador de links para WhatsApp</title>
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      .user-name-display {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+      .confirmation-buttons {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1>Generador de links para WhatsApp</h1>
+      <p>Los datos en el Excel tienen que estar de la siguiente manera:</p>
+      <table>
+        <tr>
+          <th>COLUMNA A</th>
+          <th>COLUMNA B</th>
+          <th>COLUMNA C</th>
+          <th>COLUMNA D</th>
+          <th>COLUMNA E</th>
+        </tr>
+        <tr>
+          <td>Código</td>
+          <td>DNI</td>
+          <td>Nombre</td>
+          <td>Apellido</td>
+          <td>Teléfono</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="datos">
+      <label for="userName">Tu Nombre:</label>
+      <input type="text" id="userName" placeholder="Ingrese su nombre" />
+      <button onclick="confirmUserName()">Confirmar Nombre</button>
+    </section>
+
+    <div id="userNameDisplay" class="user-name-display"></div>
+
+    <section class="archivos">
+      <input type="file" id="fileInput" accept=".xlsx, .xls" />
+      <button onclick="enviarMensajes()">Generar enlaces para WhatsApp</button>
+    </section>
+
+    <ol id="linksList"></ol>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <script src="./main.js"></script>
+  </body>
+</html>

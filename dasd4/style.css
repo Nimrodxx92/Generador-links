@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+body {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 3vw;
+  text-align: center;
+  background-color: rgb(243, 238, 246);
+}
+
+table {
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin: 0 auto;
+  width: 70%;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-family: sans-serif;
+  font-size: 13px;
+}
+
+th {
+  background-color: #bbb7b7;
+}
+
+h1 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+p {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.datos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+}
+
+.name label {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 20px;
+}
+
+.user-name-display {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 25px;
+  border: 1px solid black;
+  border-radius: 40px;
+  background-color: #47084962;
+  padding: 10px;
+  width: 40%;
+  margin: 0 auto;
+}
+
+ol {
+  text-align: start;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+li {
+  padding: 6px;
+  border: 1px solid rgb(150, 146, 146);
+  background-color: rgb(255, 136, 0);
+  margin-top: 5px;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  background-color: #50007f;
+  border: none;
+  color: #fff;
+  border-radius: 30px;
+  padding: 12px;
+  cursor: pointer;
+}
+
+input {
+  font-family: "Roboto", sans-serif;
+}
+
+ol li a {
+  color: #50007f; /* Color inicial de los enlaces */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+ol li a.clicked {
+  color: rgb(255, 255, 255); /* Color al hacer clic */
+}
+
+.archivos {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  width: 30%;
+  gap: 10px;
+}
