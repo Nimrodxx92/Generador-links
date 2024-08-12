@@ -1,4 +1,6 @@
 let confirmedUserName = ""; // Almacenar el nombre confirmado
+let confirmedCustomMessage = ""; // Almacenar el mensaje personalizado confirmado
+const EXPIRATION_TIME = 4 * 60 * 60 * 1000; // 4 horas en milisegundos
 
 // Función para confirmar el nombre del usuario
 function confirmUserName() {
@@ -10,7 +12,8 @@ function confirmUserName() {
   if (userName) {
     localStorage.setItem("userName", userName);
     confirmedUserName = userName;
-    userNameDisplay.textContent = `Nombre ingresado: ${confirmedUserName}`;
+    userNameDisplay.textContent = `Nombre confirmado: ${confirmedUserName}`;
+    userNameDisplay.classList.remove("hidden");
 
     // Limpiar el campo después de confirmar
     userNameInput.value = "";
@@ -19,13 +22,69 @@ function confirmUserName() {
   }
 }
 
+// Función para eliminar el nombre del usuario
+function clearUserName() {
+  localStorage.removeItem("userName");
+  confirmedUserName = "";
+
+  // Limpiar la visualización y el campo de entrada
+  document.getElementById("userNameDisplay").textContent = "";
+  document.getElementById("userNameDisplay").classList.add("hidden");
+  document.getElementById("userName").value = "";
+}
+
+// Función para confirmar el mensaje personalizado
+function confirmCustomMessage() {
+  const customMessageInput = document.getElementById("customMessage");
+  const customMessageDisplay = document.getElementById("customMessageDisplay");
+  const customMessage = customMessageInput.value;
+
+  // Validar que el mensaje no esté vacío
+  if (customMessage) {
+    // Guardar el mensaje en localStorage
+    localStorage.setItem("customMessage", customMessage);
+    confirmedCustomMessage = customMessage;
+
+    // Mostrar el mensaje de confirmación
+    customMessageDisplay.innerHTML = "<strong>Mensaje confirmado</strong>";
+    customMessageDisplay.classList.remove("hidden");
+  } else {
+    alert("Por favor ingresa un mensaje personalizado antes de confirmar.");
+  }
+}
+
+// Función para eliminar el mensaje personalizado
+function clearCustomMessage() {
+  localStorage.removeItem("customMessage");
+  confirmedCustomMessage = "";
+
+  // Limpiar la visualización y el campo de entrada
+  document.getElementById("customMessageDisplay").textContent = "";
+  document.getElementById("customMessageDisplay").classList.add("hidden");
+  document.getElementById("customMessage").value = "";
+}
+
 // Función para mostrar los enlaces almacenados en localStorage
 function displayLinks() {
   const linksList = document.getElementById("linksList");
   linksList.innerHTML = "";
 
   const storedLinks = localStorage.getItem("links");
-  if (storedLinks) {
+  const storedTimestamp = localStorage.getItem("linksTimestamp");
+
+  if (storedLinks && storedTimestamp) {
+    const currentTime = new Date().getTime();
+    const savedTime = parseInt(storedTimestamp, 10);
+
+    // Verificar si los enlaces han expirado
+    if (currentTime - savedTime > EXPIRATION_TIME) {
+      // Borrar los datos si han expirado
+      localStorage.removeItem("links");
+      localStorage.removeItem("linksTimestamp");
+      alert("Los enlaces han expirado y se han eliminado.");
+      return;
+    }
+
     const links = JSON.parse(storedLinks);
 
     for (const linkData of links) {
@@ -66,6 +125,7 @@ function displayLinks() {
 // Función para guardar los datos del Excel y los enlaces en localStorage
 function saveLinksData(linksData) {
   localStorage.setItem("links", JSON.stringify(linksData));
+  localStorage.setItem("linksTimestamp", new Date().getTime()); // Guardar timestamp actual
 }
 
 // Función para procesar el archivo Excel y guardar los datos en localStorage
@@ -80,6 +140,13 @@ async function enviarMensajes() {
 
   if (!confirmedUserName) {
     alert("Por favor confirma tu nombre antes de generar los enlaces.");
+    return;
+  }
+
+  if (!confirmedCustomMessage) {
+    alert(
+      "Por favor confirma el mensaje personalizado antes de generar los enlaces."
+    );
     return;
   }
 
@@ -117,21 +184,15 @@ async function enviarMensajes() {
         mensaje =
           `¡Hola ${nombre}! 👋🏻 ¿Cómo estás?\n` +
           `Soy *${confirmedUserName}, asesor de Naranja X*.\n\n` +
-          `Me contacto por la solicitud que iniciaste para sacar la tarjeta de crédito por la *APP NX* con el DNI ${dni} y quedó sin finalizar.\n\n` +
-          `Intenté llamarte y al no tener respuesta, te envié un email.\n\n` +
-          `¿Querés continuar con la solicitud?\n` +
-          `En caso de que la respuesta sea *SI*, te ayudo en el proceso para terminar la gestión.\n\n` +
-          `De no querer continuar y borrar los datos del sistema, solamente escribe *ANULAR*.\n\n` +
+          `Me contacto por la solicitud que iniciaste para sacar la tarjeta de crédito por la *APP NX* y quedó sin finalizar.\n\n` +
+          `${confirmedCustomMessage}\n\n` +
           `¡Aguardamos tu respuesta!`;
       } else {
         mensaje =
           `¡Hola ${nombre}! 👋🏻 ¿Cómo estás?\n` +
           `Soy *${confirmedUserName}, asesor de Naranja X*.\n\n` +
-          `Me contacto por la solicitud que iniciaste para sacar la tarjeta de crédito online con el DNI ${dni} y quedó sin finalizar.\n\n` +
-          `Intenté llamarte y al no tener respuesta, te envié un email.\n\n` +
-          `¿Querés continuar con la solicitud?\n` +
-          `En caso de que la respuesta sea *SI*, te ayudo en el proceso para terminar la gestión.\n\n` +
-          `De no querer continuar y borrar los datos del sistema, solamente escribe *ANULAR*.\n\n` +
+          `Me contacto por la solicitud que iniciaste para sacar la tarjeta de crédito online y quedó sin finalizar.\n\n` +
+          `${confirmedCustomMessage}\n\n` +
           `¡Aguardamos tu respuesta!`;
       }
 
@@ -152,16 +213,34 @@ async function enviarMensajes() {
   reader.readAsArrayBuffer(file);
 }
 
+// Función para borrar los enlaces almacenados en localStorage
+function clearLinks() {
+  localStorage.removeItem("links");
+  localStorage.removeItem("linksTimestamp");
+  displayLinks(); // Actualizar la lista de enlaces
+  alert("Todos los enlaces han sido eliminados.");
+}
+
 // Cargar los datos de la página al cargar
 window.onload = function () {
   // Cargar nombre del usuario
   const storedUserName = localStorage.getItem("userName");
   if (storedUserName) {
     confirmedUserName = storedUserName;
-    document.getElementById("userName").value = storedUserName;
     document.getElementById(
       "userNameDisplay"
     ).textContent = `Nombre confirmado: ${storedUserName}`;
+    document.getElementById("userNameDisplay").classList.remove("hidden");
+  }
+
+  // Cargar mensaje personalizado
+  const storedCustomMessage = localStorage.getItem("customMessage");
+  if (storedCustomMessage) {
+    confirmedCustomMessage = storedCustomMessage;
+    document.getElementById(
+      "customMessageDisplay"
+    ).textContent = `Mensaje personalizado confirmado: ${storedCustomMessage}`;
+    document.getElementById("customMessageDisplay").classList.remove("hidden");
   }
 
   displayLinks(); // Mostrar los enlaces almacenados

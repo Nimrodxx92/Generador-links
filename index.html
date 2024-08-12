@@ -6,17 +6,21 @@
     <title>Generador de links para WhatsApp</title>
     <link rel="stylesheet" href="./public/style.css" />
     <style>
-      .user-name-display {
+      .user-name-display,
+      .custom-message-display {
         margin-top: 10px;
         font-weight: bold;
       }
       .confirmation-buttons {
         margin-top: 10px;
       }
+      .hidden {
+        display: none;
+      }
     </style>
   </head>
   <body>
-    <section>
+    <main class="firts__container">
       <h1>Generador de links para WhatsApp</h1>
       <p>Los datos en el Excel tienen que estar de la siguiente manera:</p>
       <table>
@@ -35,19 +39,38 @@
           <td>Teléfono</td>
         </tr>
       </table>
-    </section>
+    </main>
 
-    <section class="datos">
+    <section class="data__container">
       <label for="userName">Tu Nombre:</label>
       <input type="text" id="userName" placeholder="Ingrese su nombre" />
       <button onclick="confirmUserName()">Confirmar Nombre</button>
+      <button onclick="clearUserName()">Eliminar Nombre</button>
     </section>
+    <div id="userNameDisplay" class="user-name-display hidden"></div>
 
-    <div id="userNameDisplay" class="user-name-display"></div>
+    <section class="custom-message">
+      <div class="message__container">
+        <label for="customMessage">Mensaje Personalizado:</label>
+        <button onclick="confirmCustomMessage()">Confirmar Mensaje</button>
+        <button onclick="clearCustomMessage()">Eliminar Mensaje</button>
+      </div>
+      <textarea
+        id="customMessage"
+        placeholder="Ingrese el mensaje personalizado"
+        rows="4"
+      ></textarea>
+    </section>
+    <div id="customMessageDisplay" class="custom-message-display hidden"></div>
 
     <section class="archivos">
       <input type="file" id="fileInput" accept=".xlsx, .xls" />
-      <button onclick="enviarMensajes()">Generar enlaces para WhatsApp</button>
+      <div>
+        <button onclick="enviarMensajes()">
+          Generar enlaces para WhatsApp
+        </button>
+        <button onclick="clearLinks()">Borrar Enlaces</button>
+      </div>
     </section>
 
     <ol id="linksList"></ol>
