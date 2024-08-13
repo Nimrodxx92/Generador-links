@@ -110,9 +110,14 @@ th {
   border: 1px solid black;
   border-radius: 5px;
   padding: 2px;
-  width: 30%;
+  width: 100%;
   margin: 0 auto;
   background-color: #b954bd62;
+}
+
+.ejemplo-message {
+  font-size: 14px;
+  width: 45%;
 }
 
 ol {
