@@ -59,7 +59,7 @@ function displayLinks(linksData = []) {
 
       const listItem = document.createElement("li");
       const link = document.createElement("a");
-      link.href = `https://web.whatsapp.com/send?phone=${telefono}&text=${encodeURIComponent(
+      link.href = `https://api.whatsapp.com/send?phone=${telefono}&text=${encodeURIComponent(
         mensaje
       )}`;
       link.target = "_blank";
@@ -136,15 +136,13 @@ async function enviarMensajes() {
           `¡Hola ${nombre}! 👋🏻 ¿Cómo estás?\n` +
           `Soy *${confirmedUserName}, asesor de Naranja X*.\n\n` +
           `Me contacto por la solicitud que iniciaste para sacar la tarjeta de crédito por la *APP NX* y quedó sin finalizar.\n\n` +
-          `${confirmedCustomMessage}\n\n` +
-          `¡Aguardamos tu respuesta!`;
+          `${confirmedCustomMessage}`;
       } else {
         mensaje =
           `¡Hola ${nombre}! 👋🏻 ¿Cómo estás?\n` +
           `Soy *${confirmedUserName}, asesor de Naranja X*.\n\n` +
           `Me contacto por la solicitud que iniciaste para sacar la tarjeta de crédito online y quedó sin finalizar.\n\n` +
-          `${confirmedCustomMessage}\n\n` +
-          `¡Aguardamos tu respuesta!`;
+          `${confirmedCustomMessage}`;
       }
 
       linksData.push({ telefono, mensaje, nombre, apellido });

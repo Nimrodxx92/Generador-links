@@ -116,8 +116,13 @@ th {
 }
 
 .ejemplo-message {
-  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-size: 13px;
   width: 45%;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 
 ol {

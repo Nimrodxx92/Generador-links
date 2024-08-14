@@ -54,10 +54,6 @@
         <label for="customMessage">Mensaje Personalizado:</label>
         <button onclick="confirmCustomMessage()">Confirmar Mensaje</button>
         <button onclick="clearCustomMessage()">Eliminar Mensaje</button>
-        <div
-          id="customMessageDisplay"
-          class="custom-message-display hidden"
-        ></div>
       </div>
       <textarea
         id="customMessage"
@@ -65,16 +61,20 @@
         rows="4"
       ></textarea>
       <div class="ejemplo-message">
-        <p>
-          ¡Hola (Nombre)! 👋🏻 ¿Cómo estás? Soy (Colaborador), asesor de Naranja
-          X.
-        </p>
-        <p>
-          Me contacto por la solicitud que iniciaste para sacar la tarjeta de
-          crédito (APP/online) y quedó sin finalizar.
-        </p>
-        <p>(Mensaje creado)</p>
-        <p>¡Aguardamos tu respuesta!</p>
+        <div>
+          <p>
+            ¡Hola (Cliente)! 👋🏻 ¿Cómo estás? Soy (Nombre), asesor de Naranja X.
+          </p>
+          <p>
+            Me contacto por la solicitud que iniciaste para sacar la tarjeta de
+            crédito (APP/online) y quedó sin finalizar.
+          </p>
+          <p>(Mensaje creado)</p>
+        </div>
+        <div
+          id="customMessageDisplay"
+          class="custom-message-display hidden"
+        ></div>
       </div>
     </section>
 
